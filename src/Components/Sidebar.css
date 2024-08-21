@@ -1,0 +1,32 @@
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-nav li {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+  }
+  
+  .sidebar-nav li svg {
+    margin-right: 10px;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    background-color: #f0f0f0;
+
+    width: 250px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
