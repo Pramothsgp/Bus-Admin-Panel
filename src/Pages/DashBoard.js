@@ -1,7 +1,7 @@
 import React , { useState }from 'react'
 
-import BusTable from '../Components/BusTable';
-import ResourceAttendence from '../Components/ResourceAttendence';
+import BusTable from '../components/BusTable';
+import ResourceAttendence from '../components/ResourceAttendence';
 import { FaSearchLocation } from 'react-icons/fa';
 
 import './DashBoard.css';
