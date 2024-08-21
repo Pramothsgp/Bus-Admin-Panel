@@ -1,10 +1,11 @@
 import React , { useState }from 'react'
 
-import BusTable from '../Components/BusTable';
 import ResourceAttendence from '../Components/ResourceAttendence';
 import { FaSearchLocation } from 'react-icons/fa';
 
 import './DashBoard.css';
+import DataTable from '../Components/DataTable';
+import TableNavigator from '../Components/TableNavigator';
 
 const busdata = [
     { id: '13A', busNo: 'DL 99 1234', start: 'Loha Mandi', destination: 'Payal Cinema', recentStop: 'Chanakyapuri', deliveryStatus: 'Active' },
@@ -36,11 +37,11 @@ const DashBoard = () => {
     const [buses, setBuses] = useState(busdata);
 
     const [currentPage, setCurrentPage] = useState(1);
-    // const [busesPerPage, setbusesPerPage] = useState(10);
-    const busesPerPage = 10;
+    // const [rowsPerPage, setrowsPerPage] = useState(10);
+    const rowsPerPage = 10;
   
-    const indexOfLastBus = currentPage * busesPerPage;
-    const indexOfFirstBus = indexOfLastBus - busesPerPage;
+    const indexOfLastBus = currentPage * rowsPerPage;
+    const indexOfFirstBus = indexOfLastBus - rowsPerPage;
     const currentBuses = buses.slice(indexOfFirstBus, indexOfLastBus);
   
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -48,50 +49,23 @@ const DashBoard = () => {
     return (
       <div className="container">
         
-        <div className="main">
-          <ResourceAttendence />
+            <div className="main">
+            <div className="header">
+                <div className="stats">
+                        <ResourceAttendence data1={busdata.length} data2={'Total Bus Running'} percentage='16' arrow={ '↑' } />
+                        <ResourceAttendence data1={busdata.length * 2} data2={'Total Staffs Working'} percentage='16' arrow={ '↑' } />
+                        <ResourceAttendence data1= {5} data2={'Backup Staffs'} percentage = '2' arrow={ '↓' }/>
+                </div>
+            </div> 
           <div className="content">
             <h2>Real Time Data</h2>
             <div className="search-bar">
               <input type="text" placeholder="Search" />
               <FaSearchLocation />
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>BUS ID</th>
-                  <th>Bus No</th>
-                  <th>Start</th>
-                  <th>Destination</th>
-                  <th>Recent Stop</th>
-                  <th>Hyper Local
-                    Delivery</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentBuses.map((bus) => (
-                    <BusTable key={bus.id} {...bus} />
-                ))}
-              </tbody>
-            </table>
-            <div className="pagination">
-              <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="15 18 9 12 15 6" />
-                </svg>
-              </button>
-              {Array.from({ length: Math.ceil(buses.length / busesPerPage) }, (_, index) => (
-                <button key={index + 1} onClick={() => paginate(index + 1)} className={currentPage === index + 1 ? 'active' : ''}>
-                  {index + 1}
-                </button>
-              ))}
-              
-              <button onClick={() => paginate(currentPage + 1)}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
-            </div>
+                    <DataTable currentBuses={currentBuses} />
+
+                    <TableNavigator paginate = {paginate} currentPage ={ currentPage } rowsPerPage = {rowsPerPage}  totalRows={buses.length} />
             <p>Showing data 1 to 8 of 50 entries</p>
           </div>
         </div>

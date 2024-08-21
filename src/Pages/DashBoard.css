@@ -36,7 +36,7 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -60,6 +60,7 @@
 }
 
 .stat {
+  flex: auto;
   background-color: #fff;
   padding: 15px;
   border-radius: 10px;
