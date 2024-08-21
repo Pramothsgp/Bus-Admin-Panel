@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
-import { MdDashboard } from 'react-icons/md';
+import { MdDashboard, MdOutlineEmergencyShare } from 'react-icons/md';
 import { FaRegCircleUser } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import './Sidebar.css'
+import { AiOutlineProduct } from 'react-icons/ai';
+import { RiCustomerService2Fill } from 'react-icons/ri';
+import { GiCash } from 'react-icons/gi';
+import { IoMdHelpCircleOutline } from 'react-icons/io';
 const SideBar = () => {
 
   return (
@@ -14,23 +18,28 @@ const SideBar = () => {
         <ul className="sidebar-nav">
           <li>
           <MdDashboard />
-            <Link to = '/' ><span>Dashboard</span></Link>
+            <Link to = '/' >Dashboard</Link>
             
           </li>
-          <li>
-            <span>Product</span>
-          </li>
-          <li>
-            <span>Customers</span>
+        <li>
+          <AiOutlineProduct />
+            Product
           </li>
         <li>
-        <Link to = '/revenue' ><span>Revenue Analysis</span></Link>
+        <RiCustomerService2Fill />
+            Customers
           </li>
-          <li>
-            <span>Emergency Routing</span>
+        <li>
+          <GiCash />
+          <Link to = '/revenue' >Revenue Analysis</Link>
           </li>
-          <li>
-            <span>Help</span>
+        <li>
+        <MdOutlineEmergencyShare />
+            Emergency Routing
+          </li>
+        <li>
+        <IoMdHelpCircleOutline />
+            Help
           </li>
         </ul>
         <div className="user-profile">
@@ -39,9 +48,6 @@ const SideBar = () => {
             <h3>Manager</h3>
             <p>Bus Manager</p>
           </div>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 9l-7 7-7-7" />
-          </svg>
         </div>
       </div>
   )
