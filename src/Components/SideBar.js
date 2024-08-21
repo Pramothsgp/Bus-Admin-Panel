@@ -36,8 +36,8 @@ const SideBar = () => {
           <Link to = '/revenue' >Revenue Analysis</Link>
           </li>
         <li>
-        <MdOutlineEmergencyShare />
-            Emergency Routing
+          <MdOutlineEmergencyShare />
+          <Link to='/Emergency-routing' > Emergency Routing </Link>
           </li>
         <li>
         <IoMdHelpCircleOutline />
