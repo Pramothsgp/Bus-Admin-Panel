@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MdDashboard, MdOutlineEmergencyShare } from 'react-icons/md';
+import { MdDashboard, MdKeyboardArrowRight, MdOutlineEmergencyShare } from 'react-icons/md';
 import { FaRegCircleUser } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import './Sidebar.css'
@@ -10,17 +10,24 @@ import { GiCash } from 'react-icons/gi';
 import { IoMdHelpCircleOutline } from 'react-icons/io';
 
 const SideBar = () => {
+  const [showSideBar, setShowSideBar] = useState(false);
 
+  const handleSideBar = () => {
+    setShowSideBar(!showSideBar);
+  }
   return (
 
-    <div className="sidebar">
+    <div className={`sidebar-${showSideBar}`}>
+      <button className={`sidebar-control ${showSideBar}`} onClick={handleSideBar}>
+          <MdKeyboardArrowRight />
+      </button>
         <div className="logo">
           <h2>{ <FaRegCircleUser /> }Manager Dashboard</h2>
         </div>
         <ul className="sidebar-nav">
           <li>
           <MdDashboard />
-            <Link to = '/' >Dashboard</Link>
+            <Link to = '/dashboard' >Dashboard</Link>
             
           </li>
         <li>
@@ -50,7 +57,7 @@ const SideBar = () => {
             <h3>Manager</h3>
             <p>Bus Manager</p>
           </div>
-        </div>
+      </div>
       </div>
   )
 }
