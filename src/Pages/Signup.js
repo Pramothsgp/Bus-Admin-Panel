@@ -1,20 +1,37 @@
-import React, { useState } from 'react';
-import './Signup.css';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import React, { useState } from "react";
+import { auth, db } from "../config/firebase";
+import "./Signup.css";
 
 const Signup = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log({ name, email, password, userType });
+  const signIn = async (e) => {
+    try {
+      e.preventDefault();
+      await createUserWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+      console.log(user);
+      if (user) {
+        await setDoc(doc(db, "users", user.uid), {
+          email: email,
+          name: name,
+          userType: userType,
+        });
+        window.location.href="/dashboard";
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <form className="signup-form" onSubmit={handleSubmit}>
+    <form className="signup-form">
       <h2>Sign up</h2>
       <div className="form-group">
         <label htmlFor="name">Name*</label>
@@ -74,9 +91,15 @@ const Signup = () => {
           <label htmlFor="businessStaff">BUSINESS STAFF</label>
         </div>
       </div>
-      <button type="submit" className="create-account-btn">CREATE AN ACCOUNT</button>
-      <button type="button" className="google-signup-btn">SIGN UP WITH GOOGLE</button>
-      <p>Already have an account? <a href="/login">Log in</a></p>
+      <button type="submit" onClick={signIn} className="create-account-btn">
+        CREATE AN ACCOUNT
+      </button>
+      <button type="button" className="google-signup-btn">
+        SIGN UP WITH GOOGLE
+      </button>
+      <p>
+        Already have an account? <a href="/">Log in</a>
+      </p>
     </form>
   );
 };

@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Login.css';
-
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleLogIn = async(e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log({ email, password, rememberMe });
-  };
+
+    try{
+      await signInWithEmailAndPassword(auth,email,password);
+      const user=auth.currentUser;
+      window.location.href="/dashboard"
+
+    }
+    catch(error)
+    {
+      console.log(error);
+    }
+  }
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
+    <form className="login-form" >
       <h2>log in</h2>
       <div className="form-group">
         <label htmlFor="email">Email</label>
@@ -46,9 +57,12 @@ const Login = () => {
         />
         <label htmlFor="rememberMe">Remember Me</label>
       </div>
-      <button type="submit" className="login-btn">LOG IN</button>
+      <button type="submit" className="login-btn"
+      onClick={handleLogIn}
+      >LOG IN</button>
       <p><a href="/forgot-password">Forgot password?</a></p>
-      <button type="button" className="create-account-btn">CREATE AN ACCOUNT</button>
+      <Link to="/signup"><button type="button" className="create-account-btn"
+      >CREATE AN ACCOUNT</button></Link>
     </form>
   );
 };
