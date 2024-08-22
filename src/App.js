@@ -7,6 +7,7 @@ import Signup from './Pages/Signup';
 import SideBar from './Components/SideBar';
 import Login from './Pages/Login';
 import EmergencyRouting from './Pages/EmergencyRouting/EmergencyRouting';
+import Product from './Pages/Product/Product';
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
             <Route path='/' element={<Login />} />
             <Route path='/dashboard' element={<DashBoard />} />
             <Route path='/revenue' element={<Income />} />
+            <Route path='/product' element={<Product />} />
             <Route path='/Emergency-routing' element = {<EmergencyRouting />} />
           </Routes>
         </div>

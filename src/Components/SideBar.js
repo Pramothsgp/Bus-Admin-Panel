@@ -32,7 +32,7 @@ const SideBar = () => {
           </li>
         <li>
           <AiOutlineProduct />
-            Product
+            <Link to="/product">Product</Link>
           </li>
         <li>
         <RiCustomerService2Fill />
