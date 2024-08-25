@@ -1,5 +1,6 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// src/App.js
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import DashBoard from './Pages/DashBoard';
 import Income from './Pages/Income';
@@ -8,27 +9,38 @@ import SideBar from './Components/SideBar';
 import Login from './Pages/Login';
 import EmergencyRouting from './Pages/EmergencyRouting/EmergencyRouting';
 import Product from './Pages/Product/Product';
-
+import { AuthProvider, AuthContext } from './context/AuthContext';
 
 const App = () => {
   return (
+    <AuthProvider>
+      <Router>
+        <MainContent />
+      </Router>
+    </AuthProvider>
+  );
+};
 
-    <Router>
-      <div className="app-container">
-        <SideBar />
-        <div className="content">
-          <Routes>
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/' element={<Login />} />
-            <Route path='/dashboard' element={<DashBoard />} />
-            <Route path='/revenue' element={<Income />} />
-            <Route path='/product' element={<Product />} />
-            <Route path='/Emergency-routing' element = {<EmergencyRouting />} />
-          </Routes>
-        </div>
-        </div>
-        
-    </Router>
+const MainContent = () => {
+  const { user } = useContext(AuthContext);
+  const location = useLocation();
+
+  const isLoginPage = location.pathname === '/';
+
+  return (
+    <div className="app-container">
+      {!isLoginPage && user && <SideBar />}
+      <div className="content">
+        <Routes>
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/dashboard' element={user && <DashBoard />} />
+          <Route path='/revenue' element={user && <Income />} />
+          <Route path='/product' element={user && <Product />} />
+          <Route path='/Emergency-routing' element={user && <EmergencyRouting />} />
+        </Routes>
+      </div>
+    </div>
   );
 };
 
