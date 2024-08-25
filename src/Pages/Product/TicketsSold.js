@@ -126,7 +126,7 @@ const TicketsSold = () => {
   }, []);
 
   return (
-    <div id="chartdiv" style={{ width: "70%", height: "300px", margin: "auto" }}>
+    <div id="chartdiv" style={{ width: "70%", height: "700px", margin: "auto" }}>
         <h1>Tickets Sold On Each Route</h1>
     </div>
   );
