@@ -10,6 +10,7 @@ import Login from './Pages/Login';
 import EmergencyRouting from './Pages/EmergencyRouting/EmergencyRouting';
 import Product from './Pages/Product/Product';
 import { AuthProvider, AuthContext } from './context/AuthContext';
+import AddTicketData from './Pages/AddTicketData';
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const MainContent = () => {
           <Route path='/revenue' element={user && <Income />} />
           <Route path='/product' element={user && <Product />} />
           <Route path='/Emergency-routing' element={user && <EmergencyRouting />} />
+          <Route path='/AddTicketData' element={user && <AddTicketData />} />
         </Routes>
       </div>
     </div>

@@ -2,9 +2,14 @@ import React, { useLayoutEffect } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
 
-const TicketsSold = () => {
+const  TicketsSold =  (props) => {
+
+  const ticketDataRef=collection(db,"ticketData")
+
   useLayoutEffect(() => {
     // Create root element
     let root = am5.Root.new("chartdiv");
@@ -89,41 +94,42 @@ const TicketsSold = () => {
       return chart.get("colors").getIndex(series.columns.indexOf(target));
     });
 
-    // Set data
-    let data = [{
-      Route: "POINT A TO POINT B",
-      ticketsSold: 2025
-    }, {
-      Route: "POINT B TO C",
-      ticketsSold: 1882
-    }, {
-      Route: "POINT C TO POINT D",
-      ticketsSold: 1809
-    }, {
-      Route: "POINT D TO POINT E",
-      ticketsSold: 1322
-    }, {
-      Route: "POINT E TO POINT F",
-      ticketsSold: 1122
-    }, {
-      Route: "POINT F TO POINT G",
-      ticketsSold: 1114
-    }, {
-      Route: "POINT G TO POINT H",
-      ticketsSold: 984
-    }];
 
-    xAxis.data.setAll(data);
-    series.data.setAll(data);
+    let data=[]
 
-    // Make stuff animate on load
-    series.appear(1000);
-    chart.appear(1000, 100);
+    const getTicketData= async() => {
+      let filtered = await getDocs(ticketDataRef);
+      filtered = filtered.docs;
+      filtered=filtered.filter( (doc) => 
+      {
+        return doc.data().date === props.ticketDate;
+      })
+      filtered=filtered.map( (doc) => ({
+        Route: doc.data().destA+" to "+doc.data().destB,
+        ticketsSold: parseInt(doc.data().noOfTickets)
+      }))
+      console.log(filtered)
+      console.log(filtered)
+      console.log(Array.isArray(filtered))
+      data=filtered;
+
+
+      xAxis.data.setAll(data);
+      series.data.setAll(data);
+      // Make stuff animate on load
+      series.appear(1000);
+      chart.appear(1000, 100);
+  
+    }
+    
+    getTicketData();
 
     return () => {
       root.dispose();
     };
-  }, []);
+    
+
+  });
 
   return (
     <div id="chartdiv" style={{ width: "70%", height: "300px", margin: "auto" }}>
