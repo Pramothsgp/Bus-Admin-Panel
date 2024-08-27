@@ -39,11 +39,9 @@ const  TicketsSold =  (props) => {
     });
 
     xRenderer.labels.template.setAll({
-      rotation: -90,
-      paddingLeft: 15,
-      marginLeft: 15,
-      centerY: am5.p50,
-      centerX: am5.p100,
+      rotation: 0,
+      centerY: am5.p100,
+      centerX: am5.p50,
       paddingRight: 15
     });
 
@@ -57,6 +55,7 @@ const  TicketsSold =  (props) => {
       renderer: xRenderer,
       tooltip: am5.Tooltip.new(root, {})
     }));
+
 
     let yRenderer = am5xy.AxisRendererY.new(root, {
       strokeOpacity: 0.1
@@ -105,12 +104,9 @@ const  TicketsSold =  (props) => {
         return doc.data().date === props.ticketDate;
       })
       filtered=filtered.map( (doc) => ({
-        Route: doc.data().destA+" to "+doc.data().destB,
+        Route: doc.data().destA+"\n  to  \n"+doc.data().destB,
         ticketsSold: parseInt(doc.data().noOfTickets)
       }))
-      console.log(filtered)
-      console.log(filtered)
-      console.log(Array.isArray(filtered))
       data=filtered;
 
 

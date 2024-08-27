@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaRegCircleUser } from "react-icons/fa6";
 import {
   MdAddChart,
@@ -6,6 +6,7 @@ import {
   MdKeyboardArrowRight,
   MdOutlineEmergencyShare,
 } from "react-icons/md";
+import { CgLogOut } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
 
@@ -13,9 +14,31 @@ import { AiOutlineProduct } from "react-icons/ai";
 import { GiCash } from "react-icons/gi";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { RiCustomerService2Fill } from "react-icons/ri";
+import { AuthContext } from "../context/AuthContext";
+import { db } from "../config/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 const SideBar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
+  
+  const {user} = useContext(AuthContext) 
+
+  const userEmail = user ? user.email : 'No user logged in';
+  
+  const userData= collection(db,"users")
+
+  const [userName,setUserName ] =useState("Manager Name");
+
+  const setUserMail = async () => {
+    const data=await getDocs(userData)
+    const filteredData = data.docs.find((doc) => {
+      return doc.data().email === userEmail;
+    });    
+    setUserName(filteredData.data().name)
+    console.log(userName)
+  }
+
+  setUserMail();
 
   const handleSideBar = () => {
     setShowSideBar(!showSideBar);
@@ -60,11 +83,15 @@ const SideBar = () => {
           <IoMdHelpCircleOutline />
           Help
         </li>
+        <li>
+          <CgLogOut />
+          Log Out
+        </li>
       </ul>
       <div className="user-profile">
         <img src="https://picsum.photos/200/300" alt="Profile" />
         <div>
-          <h3>Manager</h3>
+          <h3>{userName}</h3>
           <p>Bus Manager</p>
         </div>
       </div>
