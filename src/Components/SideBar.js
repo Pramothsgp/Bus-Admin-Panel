@@ -15,8 +15,14 @@ import { GiCash } from "react-icons/gi";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { AuthContext } from "../context/AuthContext";
-import { db } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { signOut } from "firebase/auth";
+
+
+const handleLogOut = async() => {
+  await signOut(auth);
+}
 
 const SideBar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
@@ -83,9 +89,9 @@ const SideBar = () => {
           <IoMdHelpCircleOutline />
           Help
         </li>
-        <li>
+        <li onClick={handleLogOut}>
           <CgLogOut />
-          Log Out
+          <Link to="/">Log Out</Link>
         </li>
       </ul>
       <div className="user-profile">
