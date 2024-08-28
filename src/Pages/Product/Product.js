@@ -34,18 +34,27 @@ const styles = {
 };
 
 function Product() {
-  const [date, setDate] = useState("");
+  const [date1, setDate1] = useState("");
+  const [date2, setDate2] = useState("");
   const [displayTicketsSold, setDisplayTicketsSold] = useState(false);
 
   return (
     <div style={styles.container}>
       <label style={styles.label}>
-        Date:
+        Date 1 :
         <input
           type="date"
-          onChange={(e) => setDate(e.target.value)}
+          onChange={(e) => setDate1(e.target.value)}
           style={styles.input}
         />
+        {"       "}
+        Date 2 :
+        <input
+          type="date"
+          onChange={(e) => setDate2(e.target.value)}
+          style={styles.input}
+        />
+        <br/>
         <button
           onClick={() => setDisplayTicketsSold(true)}
           style={styles.button}
@@ -55,7 +64,7 @@ function Product() {
           Display Data
         </button>
       </label>
-      {displayTicketsSold && <TicketsSold ticketDate={date} />}
+      {displayTicketsSold && <TicketsSold ticketDate1={date1} ticketDate2={date2} />}
     </div>
   );
 }

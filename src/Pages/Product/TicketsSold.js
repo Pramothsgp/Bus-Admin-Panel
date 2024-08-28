@@ -101,7 +101,7 @@ const  TicketsSold =  (props) => {
       filtered = filtered.docs;
       filtered=filtered.filter( (doc) => 
       {
-        return doc.data().date === props.ticketDate;
+        return (doc.data().date >= props.ticketDate1 && doc.data().date <= props.ticketDate2  );
       })
       filtered=filtered.map( (doc) => ({
         Route: doc.data().destA+"\n  to  \n"+doc.data().destB,
