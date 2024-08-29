@@ -5,6 +5,7 @@ const styles = {
   container: {
     padding: "20px",
     textAlign: "left",
+    width: 'calc(90vw-5vw)',
   },
   label: {
     display: "flex",
