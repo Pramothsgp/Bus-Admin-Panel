@@ -1,43 +1,41 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { auth } from '../config/firebase';
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext); // To update user context
+
   const handleLogIn = async(e) => {
     e.preventDefault();
 
     try{
-      await signInWithEmailAndPassword(auth,email,password);
-      console.log("User logged in")
-      // const user=auth.currentUser;
-      window.location.href="/dashboard"
-      toast.success("User Logged in Successfully" , {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      setUser(userCredential.user); // Update the user in context
+      toast.success("User Logged in Successfully", {
         position: "top-center",
       });
-      // navigate('/dashboard');
+      navigate('/dashboard');
     }
-    catch(error)
-    {
+    catch(error) {
       console.log(error);
-
-      toast.error( error.message , {
-        position : "bottom-center",
+      toast.error(error.message, {
+        position: "bottom-center",
       });
     }
   }
 
   return (
     <>
-    <form className="login-form" >
-      <h2>log in</h2>
+    <form className="login-form">
+      <h2>Log In</h2>
       <div className="form-group">
         <label htmlFor="email">Email</label>
         <input
@@ -54,7 +52,7 @@ const Login = () => {
         <input
           type="password"
           id="password"
-          placeholder="Enter your Password"
+          placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -69,12 +67,13 @@ const Login = () => {
         />
         <label htmlFor="rememberMe">Remember Me</label>
       </div>
-      <button type="submit" className="login-btn"
-      onClick={handleLogIn}
-      >LOG IN</button>
+      <button type="submit" className="login-btn" onClick={handleLogIn}>
+        LOG IN
+      </button>
       <p><a href="/forgot-password">Forgot password?</a></p>
-      <Link to="/signup"><button type="button" className="create-account-btn"
-      >CREATE AN ACCOUNT</button></Link>
+      <Link to="/signup"><button type="button" className="create-account-btn">
+        CREATE AN ACCOUNT
+      </button></Link>
     </form>
     </>
   );

@@ -22,6 +22,7 @@ import { signOut } from "firebase/auth";
 
 const handleLogOut = async() => {
   await signOut(auth);
+  window.location.href="/";
 }
 
 const SideBar = () => {
