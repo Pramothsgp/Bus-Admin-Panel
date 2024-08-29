@@ -4,6 +4,7 @@ import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { Route } from 'react-router-dom';
 
 
 const  TicketsSold =  (props) => {
@@ -109,6 +110,29 @@ const  TicketsSold =  (props) => {
       }))
       data=filtered;
 
+      const dataMap= new Map();
+
+      for(let i of data)
+      {
+          const currentRoute = i.Route ;
+          if(dataMap.has(currentRoute))
+          {
+            dataMap.set(currentRoute, dataMap.get(currentRoute) + 1);
+          }
+          else
+          {
+            dataMap.set(currentRoute,i.ticketsSold);
+          }
+      }
+      
+      data=[]
+      for (let [route, tickets] of dataMap )
+      {
+        data.push( {
+          Route : route,
+          ticketsSold : tickets 
+        })
+      }
 
       xAxis.data.setAll(data);
       series.data.setAll(data);
