@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { CgLogOut } from "react-icons/cg";
 import { FaRegCircleUser } from "react-icons/fa6";
 import {
   MdAddChart,
@@ -6,45 +7,47 @@ import {
   MdKeyboardArrowRight,
   MdOutlineEmergencyShare,
 } from "react-icons/md";
-import { CgLogOut } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 
+import { signOut } from "firebase/auth";
+import { collection, getDocs } from "firebase/firestore";
 import { AiOutlineProduct } from "react-icons/ai";
 import { GiCash } from "react-icons/gi";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { RiCustomerService2Fill } from "react-icons/ri";
-import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
 import { auth, db } from "../config/firebase";
-import { collection, getDocs } from "firebase/firestore";
-import { signOut } from "firebase/auth";
+import { AuthContext } from "../context/AuthContext";
 import DateTime from "./Date/DateTime";
-
-
-const handleLogOut = async() => {
-  await signOut(auth);
-  window.location.href="/";
-}
 
 const SideBar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
-  
-  const {user} = useContext(AuthContext) 
 
-  const userEmail = user ? user.email : 'No user logged in';
-  
-  const userData= collection(db,"users")
+  const { user } = useContext(AuthContext);
 
-  const [userName,setUserName ] =useState("Manager Name");
+  const userEmail = user ? user.email : "No user logged in";
+
+  const userData = collection(db, "users");
+
+  
+  const navigate=useNavigate();
+
+  const handleLogOut = async () => {
+    await signOut(auth);
+    toast.info("User logged out successfully !");
+    navigate("/")
+  };
+  const [userName, setUserName] = useState("Manager Name");
 
   const setUserMail = async () => {
-    const data=await getDocs(userData)
+    const data = await getDocs(userData);
     const filteredData = data.docs.find((doc) => {
       return doc.data().email === userEmail;
-    });    
-    setUserName(filteredData.data().name)
+    });
+    setUserName(filteredData.data().name);
     // console.log(userName)
-  }
+  };
 
   setUserMail();
 
@@ -60,16 +63,30 @@ const SideBar = () => {
         <MdKeyboardArrowRight />
       </button>
       <div className="logo">
-        <h2 >{<FaRegCircleUser />}Manager Dashboard</h2>
+        <h2>{<FaRegCircleUser />}Manager Dashboard</h2>
       </div>
       <ul className="sidebar-nav">
         <li>
           <MdDashboard />
-          <Link to="/dashboard" onClick={() => { setShowSideBar(false) }}>Dashboard</Link>
+          <Link
+            to="/dashboard"
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            Dashboard
+          </Link>
         </li>
         <li>
           <AiOutlineProduct />
-          <Link to="/product" onClick={() => { setShowSideBar(false) }}>Product</Link>
+          <Link
+            to="/product"
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            Product
+          </Link>
         </li>
         <li>
           <RiCustomerService2Fill />
@@ -77,15 +94,38 @@ const SideBar = () => {
         </li>
         <li>
           <GiCash />
-          <Link to="/revenue" onClick={() => { setShowSideBar(false) }}>Revenue Analysis</Link>
+          <Link
+            to="/revenue"
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            Revenue Analysis
+          </Link>
         </li>
         <li>
           <MdOutlineEmergencyShare />
-          <Link to="/Emergency-routing" onClick={() => { setShowSideBar(false) }}> Emergency Routing </Link>
+          <Link
+            to="/Emergency-routing"
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            {" "}
+            Emergency Routing{" "}
+          </Link>
         </li>
         <li>
           <MdAddChart />
-          <Link to="/AddTicketData" onClick={() => { setShowSideBar(false) }}> Add Tickets </Link>
+          <Link
+            to="/AddTicketData"
+            onClick={() => {
+              setShowSideBar(false);
+            }}
+          >
+            {" "}
+            Add Tickets{" "}
+          </Link>
         </li>
         <li>
           <IoMdHelpCircleOutline />
