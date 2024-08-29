@@ -58,16 +58,16 @@ const SideBar = () => {
         <MdKeyboardArrowRight />
       </button>
       <div className="logo">
-        <h2>{<FaRegCircleUser />}Manager Dashboard</h2>
+        <h2 >{<FaRegCircleUser />}Manager Dashboard</h2>
       </div>
       <ul className="sidebar-nav">
         <li>
           <MdDashboard />
-          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/dashboard" onClick={() => { setShowSideBar(false) }}>Dashboard</Link>
         </li>
         <li>
           <AiOutlineProduct />
-          <Link to="/product">Product</Link>
+          <Link to="/product" onClick={() => { setShowSideBar(false) }}>Product</Link>
         </li>
         <li>
           <RiCustomerService2Fill />
@@ -75,15 +75,15 @@ const SideBar = () => {
         </li>
         <li>
           <GiCash />
-          <Link to="/revenue">Revenue Analysis</Link>
+          <Link to="/revenue" onClick={() => { setShowSideBar(false) }}>Revenue Analysis</Link>
         </li>
         <li>
           <MdOutlineEmergencyShare />
-          <Link to="/Emergency-routing"> Emergency Routing </Link>
+          <Link to="/Emergency-routing" onClick={() => { setShowSideBar(false) }}> Emergency Routing </Link>
         </li>
         <li>
           <MdAddChart />
-          <Link to="/AddTicketData"> Add Tickets </Link>
+          <Link to="/AddTicketData" onClick={() => { setShowSideBar(false) }}> Add Tickets </Link>
         </li>
         <li>
           <IoMdHelpCircleOutline />
