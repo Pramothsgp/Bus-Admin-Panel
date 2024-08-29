@@ -1,29 +1,41 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Login.css';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react';
+// import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { auth } from '../config/firebase';
+import './Login.css';
+import { Link } from 'react-router-dom';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-
+  // const navigate = useNavigate();
   const handleLogIn = async(e) => {
     e.preventDefault();
 
     try{
       await signInWithEmailAndPassword(auth,email,password);
-      const user=auth.currentUser;
+      console.log("User logged in")
+      // const user=auth.currentUser;
       window.location.href="/dashboard"
-
+      toast.success("User Logged in Successfully" , {
+        position: "top-center",
+      });
+      // navigate('/dashboard');
     }
     catch(error)
     {
       console.log(error);
+
+      toast.error( error.message , {
+        position : "bottom-center",
+      });
     }
   }
 
   return (
+    <>
     <form className="login-form" >
       <h2>log in</h2>
       <div className="form-group">
@@ -64,6 +76,7 @@ const Login = () => {
       <Link to="/signup"><button type="button" className="create-account-btn"
       >CREATE AN ACCOUNT</button></Link>
     </form>
+    </>
   );
 };
 

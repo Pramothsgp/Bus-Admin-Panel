@@ -11,6 +11,9 @@ import EmergencyRouting from './Pages/EmergencyRouting/EmergencyRouting';
 import Product from './Pages/Product/Product';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import AddTicketData from './Pages/AddTicketData';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import ProtectedRoute from './Components/ProtectedRoute'; // Import ProtectedRoute
 
 const App = () => {
   return (
@@ -27,23 +30,74 @@ const MainContent = () => {
   const location = useLocation();
 
   const isLoginPage = location.pathname === '/';
+  const isSignupPage = location.pathname === '/signup';
 
   return (
     <div className="app-container">
-      {!isLoginPage && user && <SideBar />}
+      { !isLoginPage && !isSignupPage && user && <SideBar /> }
       <div className="content">
         <Routes>
+          {/* Public Routes */}
           <Route path='/signup' element={<Signup />} />
           <Route path='/' element={<Login />} />
-          <Route path='/dashboard' element={user && <DashBoard />} />
-          <Route path='/revenue' element={user && <Income />} />
-          <Route path='/product' element={user && <Product />} />
-          <Route path='/Emergency-routing' element={user && <EmergencyRouting />} />
-          <Route path='/AddTicketData' element={user && <AddTicketData />} />
+          
+          {/* Protected Routes */}
+          <Route
+            path='/dashboard'
+            element={
+              <ProtectedRoute>
+                <DashBoard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/revenue'
+            element={
+              <ProtectedRoute>
+                <Income />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/product'
+            element={
+              <ProtectedRoute>
+                <Product />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/Emergency-routing'
+            element={
+              <ProtectedRoute>
+                <EmergencyRouting />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/AddTicketData'
+            element={
+              <ProtectedRoute>
+                <AddTicketData />
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Fallback Route for Undefined Paths */}
+          <Route path='*' element={<NotFound />} />
         </Routes>
+        <ToastContainer />
       </div>
     </div>
   );
 };
+
+// Optional: Create a NotFound component for undefined routes
+const NotFound = () => (
+  <div className="error-message">
+    <h2>Page Not Found</h2>
+    <p>The page you are looking for does not exist.</p>
+  </div>
+);
 
 export default App;

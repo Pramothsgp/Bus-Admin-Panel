@@ -41,7 +41,7 @@ const SideBar = () => {
       return doc.data().email === userEmail;
     });    
     setUserName(filteredData.data().name)
-    console.log(userName)
+    // console.log(userName)
   }
 
   setUserMail();
