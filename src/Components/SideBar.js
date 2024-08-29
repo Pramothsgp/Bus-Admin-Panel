@@ -18,6 +18,7 @@ import { AuthContext } from "../context/AuthContext";
 import { auth, db } from "../config/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { signOut } from "firebase/auth";
+import DateTime from "./Date/DateTime";
 
 
 const handleLogOut = async() => {
@@ -94,6 +95,7 @@ const SideBar = () => {
           <Link to="/">Log Out</Link>
         </li>
       </ul>
+      <DateTime />
       <div className="user-profile">
         <img src="https://picsum.photos/200/300" alt="Profile" />
         <div>
