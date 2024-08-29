@@ -22,7 +22,8 @@ const Income = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className='main'>
+    <div className='main-revenue-container'>
+      <div>
       <div className='header'>
           <div className='stats'>
             <ResourceAttendence data1={4023} data2={'Ticket Sold'} percentage = '1' />
@@ -32,7 +33,8 @@ const Income = () => {
       <div className='content'>
         <RevenueTableHeader incomeData={currentRows} />
         <TableNavigator paginate = {paginate} currentPage ={ currentPage } rowsPerPage = {rowsPerPage}  totalRows = {revenueData.length} />
-      </div>
+        </div>
+        </div>
     </div>
     
   )
