@@ -67,7 +67,7 @@ const MainContent = () => {
             }
           />
           <Route
-            path='/Emergency-routing'
+            path='/Emergency-routing/*'
             element={
               <ProtectedRoute>
                 <EmergencyRouting />
