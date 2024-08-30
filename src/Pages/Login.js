@@ -19,9 +19,7 @@ const Login = () => {
     try{
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user); // Update the user in context
-      toast.success("User Logged in Successfully", {
-        position: "top-center",
-      });
+      toast.success("User Logged in Successfully");
       navigate('/dashboard');
     }
     catch(error) {
