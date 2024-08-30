@@ -3,7 +3,8 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { auth } from '../config/firebase';
-
+import { DNA } from 'react-loader-spinner';
+import './ProtectedRoute.css'
 const ProtectedRoute = ({ children }) => {
   // const { user } = useContext(AuthContext);
   let user;
@@ -43,7 +44,14 @@ const ProtectedRoute = ({ children }) => {
   }, [user, navigate]);
 
   if (isCheckingAuth) {
-    return <div>Loading...</div>; 
+    return <div className='loader-container'><DNA
+    visible={true}
+    height="80"
+    width="80"
+    ariaLabel="dna-loading"
+    wrapperStyle={{}}
+    wrapperClass="dna-wrapper"
+    /></div>; 
   }
 
   if (!user) {
