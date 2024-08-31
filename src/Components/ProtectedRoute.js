@@ -1,25 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { auth } from '../config/firebase';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { auth } from "../config/firebase";
 
 const ProtectedRoute = ({ children }) => {
   // const { user } = useContext(AuthContext);
   let user;
-  const fetchUser = async () => {
-    
-    const fetchUserDetails = () =>
-      {
-        user=auth.currentUser;
-        console.log(user);
-      }
-    
-      await fetchUserDetails();
-      
-  }
-
-  fetchUser()
+  user = auth.currentUser;
 
   const navigate = useNavigate();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
@@ -27,13 +14,13 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     if (user === null) {
       // Handle loading state, if necessary
-      return ;
+      return;
     }
-    
+
     if (!user) {
-      toast.error('You must be logged in to access this page.');
+      toast.error("You must be logged in to access this page.");
       const timer = setTimeout(() => {
-        navigate('/');
+        navigate("/");
       }, 5000);
 
       return () => clearTimeout(timer);
@@ -43,7 +30,7 @@ const ProtectedRoute = ({ children }) => {
   }, [user, navigate]);
 
   if (isCheckingAuth) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   if (!user) {
