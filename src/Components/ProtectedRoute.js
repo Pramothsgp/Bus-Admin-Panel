@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { auth } from "../config/firebase";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { DNA } from 'react-loader-spinner';
+import './ProtectedRoute.css'
+import { auth } from '../config/firebase';
 
 const ProtectedRoute = ({ children }) => {
   // const { user } = useContext(AuthContext);
-  let user;
-  user = auth.currentUser;
+  const user = auth.currentUser;
 
   const navigate = useNavigate();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
@@ -30,7 +31,14 @@ const ProtectedRoute = ({ children }) => {
   }, [user, navigate]);
 
   if (isCheckingAuth) {
-    return <div>Loading...</div>;
+    return <div className='loader-container'><DNA
+    visible={true}
+    height="80"
+    width="80"
+    ariaLabel="dna-loading"
+    wrapperStyle={{}}
+    wrapperClass="dna-wrapper"
+    /></div>; 
   }
 
   if (!user) {
