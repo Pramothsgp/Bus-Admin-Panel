@@ -1,6 +1,7 @@
 import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
 import { db } from "../config/firebase";
+import { toast } from "react-toastify";
 
 function AddTicketData() {
   const [destA, setDestA] = useState("");
@@ -18,6 +19,7 @@ function AddTicketData() {
         noOfTickets: noOfTickets,
         date: date,
       });
+      toast.success("Ticket Data Added successfully")
       // Clear the form after successful submission
       setDestA("");
       setDestB("");

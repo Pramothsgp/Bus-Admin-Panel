@@ -3,6 +3,7 @@ import { db } from "../../config/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import ComboBox from "../../Components/StopAutoComplete/ComboBox";
 import "./AddBus.css";
+import { toast } from "react-toastify";
 
 const AddRoute = () => {
   const [Start_stop, setStartValue] = useState({});
@@ -30,6 +31,7 @@ const AddRoute = () => {
         Stop_num: parseInt(Stop_num, 10),
         Stop_list,
       });
+      toast.success("Route added successfully !")
       console.log("Document written with ID: ", docRef.id);
       console.log("temp_stop");
       console.log(start_stop + " " + end_stop);
